@@ -1,0 +1,128 @@
+﻿@{
+    ViewData["Title"] = "Flight Search";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Flight Search</h2>
+
+    <div class="card mb-4">
+        <div class="card-body">
+            <ul class="nav nav-tabs" id="searchTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="city-tab" data-bs-toggle="tab" data-bs-target="#city" type="button" role="tab">Search by Cities</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="country-tab" data-bs-toggle="tab" data-bs-target="#country" type="button" role="tab">Search by Countries</button>
+                </li>
+            </ul>
+
+            <div class="tab-content mt-3" id="searchTabsContent">
+                <!-- Search 3al cities -->
+                <div class="tab-pane fade show active" id="city" role="tabpanel">
+                    <form id="citySearchForm" class="row g-3">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="departureCity" placeholder="Departure City" required>
+                            <div id="departureCitySuggestions" class="suggestions-dropdown"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="arrivalCity" placeholder="Arrival City" required>
+                            <div id="arrivalCitySuggestions" class="suggestions-dropdown"></div>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control" id="cityDate">
+                        </div>
+                        <div class="col-md-1">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- search 3al countries -->
+                <div class="tab-pane fade" id="country" role="tabpanel">
+                    <form id="countrySearchForm" class="row g-3">
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="departureCountry" placeholder="Departure Country" required>
+                        </div>
+                        <div class="col-md-4">
+                            <input type="text" class="form-control" id="arrivalCountry" placeholder="Arrival Country" required>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control" id="countryDate">
+                        </div>
+                        <div class="col-md-1">
+                            <button type="submit" class="btn btn-primary">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="searchResults" class="d-none">
+        <h3 class="mb-3">Search Results</h3>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Flight Number</th>
+                        <th>Airline</th>
+                        <th>Departure</th>
+                        <th>Arrival</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsBody">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-between align-items-center mt-3">
+            <div class="pagination-info">
+                Showing <span id="startRecord">0</span> to <span id="endRecord">0</span> of <span id="totalRecords">0</span> flights
+            </div>
+            <div class="pagination-controls">
+                <button id="prevPage" class="btn btn-outline-primary me-2" disabled>Previous</button>
+                <button id="nextPage" class="btn btn-outline-primary" disabled>Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="text-center d-none">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Error Alert -->
+    <div id="errorAlert" class="alert alert-danger d-none" role="alert">
+    </div>
+</div>
+
+<style>
+.suggestions-dropdown {
+    position: absolute;
+    background: white;
+    border: 1px solid #ddd;
+    border-top: none;
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+    z-index: 1000;
+    display: none;
+}
+
+.suggestion-item {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.suggestion-item:hover {
+    background-color: #f8f9fa;
+}
+</style>
+
+@section Scripts {
+    <script src="~/js/flightSearch.js"></script>
+}
